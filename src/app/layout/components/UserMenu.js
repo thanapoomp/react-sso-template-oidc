@@ -37,6 +37,11 @@ function UserMenu() {
     setAnchorEl(null);
   };
 
+  const handleProfile = () => {
+    //window.location = "https://demoauthserver.devsiamsmile.com/";
+    window.open("https://demoauthserver.devsiamsmile.com/");
+  };
+
   const logoutClick = () => {
     swal
       .swalConfirm("ยืนยัน?", "คุณต้องการออกจากระบบใช่หรือไม่?")
@@ -76,7 +81,9 @@ function UserMenu() {
         >
           {/* start  User Profile*/}
           <MenuItem>
-            <UserProfile></UserProfile>
+            <div onClick={handleProfile.bind(this)}>
+              <UserProfile></UserProfile>
+            </div>
           </MenuItem>
           {/* end User Profile */}
 
