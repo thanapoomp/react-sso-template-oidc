@@ -39,13 +39,13 @@ export const SSO_CONFIG = {
     // if deploy on same domain set = true,
     // if deploy on different domain must set = false
     !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-      ? false
+      ? true //false
       : true,
 };
 
 export const API_URL =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-    ? "https://localhost:44388/api" //dev 
+    ? "https://localhost:44388/api" //dev
     : "https://localhost:44388/api"; // Production
 
 export const ROLES = {
