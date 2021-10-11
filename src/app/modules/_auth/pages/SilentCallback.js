@@ -13,7 +13,7 @@ function SilentCallback() {
   });
 
   React.useEffect(() => {
-    console.log("woo!");
+    console.log("start renew token woo!");
     userManager
       .signinSilentCallback()
       .then((user) => {
