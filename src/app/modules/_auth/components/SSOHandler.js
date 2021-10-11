@@ -76,6 +76,7 @@ function SSOHandler(props) {
           //keep user detail in redux
           let payload = {
             user: authCRUD.getUserByToken(user.id_token),
+            authToken: user.access_token,
             roles: [], //TODO: get roles
           };
           setLoggedIn(true);

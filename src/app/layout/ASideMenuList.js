@@ -41,11 +41,11 @@ export default function ASideMenuList() {
       <MenuItem iconName="home" text="Home" path="/home"></MenuItem>
 
       <MenuItem iconName="quiz" text="Test" path="/test"></MenuItem>
-
+      <MenuItem iconName="book" text="Call API" path="/loggedin"></MenuItem>
       <ParentsMenu iconName="admin_panel_settings" text="Admin">
         <MenuItem iconName="star" text="Title" path="/title"></MenuItem>
       </ParentsMenu>
-      {/* End employees */}
+      
     </List>
   );
 }
