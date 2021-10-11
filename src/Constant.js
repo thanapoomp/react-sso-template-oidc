@@ -35,6 +35,21 @@ export const SSO_CONFIG = {
   response_type: "code",
   scope: "openid profile roles employeeapi email",
   automaticSilentRenew: true,
+  monitorSession:
+    // if deploy on same domain set = true,
+    // if deploy on different domain must set = false
+    !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+      ? false
+      : true,
+
+  //loadUserInfo: true,
+  //monitorAnonymousSession: true,
+  //checkSessionInterval: 60,
+  //revokeAccessTokenOnSignout: true, // will revoke (reference) access tokens at logout time
+  //filterProtocolClaims: false, // this will allow all the OIDC protocol claims to be visible in the window. normally a client app wouldn't care about them or want them taking up space
+  //state: true,
+  //nonce: true,
+  //clearHashAfterLogin: true,
 };
 
 export const API_URL =
