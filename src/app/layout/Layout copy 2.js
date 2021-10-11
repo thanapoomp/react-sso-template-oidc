@@ -1,23 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
-import clsx from "clsx";
 import AppBar from "@material-ui/core/AppBar";
 import { ThemeProvider, CssBaseline } from "@material-ui/core";
+import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
+import Fab from "@material-ui/core/Fab";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, createTheme } from "@material-ui/core/styles";
-import Zoom from "@material-ui/core/Zoom";
+import { useSelector, useDispatch } from "react-redux";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import ASideMenuList from "./ASideMenuList";
-import Fab from "@material-ui/core/Fab";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import Zoom from "@material-ui/core/Zoom";
+import * as layoutRedux from "./_redux/layoutRedux";
+import ASideMenuList from "./ASideMenuList";
 import TitleAppBar from "./TitleAppBar";
 
-const drawerWidth = 240;
+const drawerWidth = 245;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,58 +52,72 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  scrollTopRoot: {
+    position: "fixed",
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
   list: {
-    width: 250,
+    width: 240,
   },
   fullList: {
     width: "auto",
   },
 }));
 
-function ResponsiveDrawer(props) {
+function ScrollTop(props) {
+  const { children, window } = props;
+  const classes = useStyles();
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+    disableHysteresis: true,
+    threshold: 100,
+  });
+
+  const handleClick = (event) => {
+    const anchor = (event.target.ownerDocument || document).querySelector(
+      "#back-to-top-anchor"
+    );
+
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  return (
+    <Zoom in={trigger}>
+      <div
+        onClick={handleClick}
+        role="presentation"
+        className={classes.scrollTopRoot}
+      >
+        {children}
+      </div>
+    </Zoom>
+  );
+}
+
+function Layout(props) {
   const { window } = props;
   const classes = useStyles();
+  const layoutReducer = useSelector(({ layout }) => layout);
+  const dispatch = useDispatch();
+
   const theme = createTheme({
     typography: {
       fontFamily: ["Sarabun", "sans-serif"].join(","),
     },
   });
-  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    dispatch(layoutRedux.actions.updateDrawerOpen(!layoutReducer.drawerOpen));
   };
 
-  function ScrollTop(props) {
-    const { children, window } = props;
-    const classes = useStyles();
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
-    const trigger = useScrollTrigger({
-      target: window ? window() : undefined,
-      disableHysteresis: true,
-      threshold: 100,
-    });
-
-    const handleClick = (event) => {
-      const anchor = (event.target.ownerDocument || document).querySelector(
-        "#back-to-top-anchor"
-      );
-
-      if (anchor) {
-        anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    };
-
-    return (
-      <Zoom in={trigger}>
-        <div onClick={handleClick} role="presentation" className={classes.root}>
-          {children}
-        </div>
-      </Zoom>
-    );
-  }
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   const list = (anchor) => (
     <div
@@ -113,9 +129,6 @@ function ResponsiveDrawer(props) {
       <ASideMenuList></ASideMenuList>
     </div>
   );
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <ThemeProvider theme={theme}>
@@ -129,7 +142,7 @@ function ResponsiveDrawer(props) {
               container={container}
               variant="temporary"
               anchor={theme.direction === "rtl" ? "right" : "left"}
-              open={mobileOpen}
+              open={layoutReducer.drawerOpen}
               onClose={handleDrawerToggle}
               classes={{
                 paper: classes.drawerPaper,
@@ -153,8 +166,9 @@ function ResponsiveDrawer(props) {
             </Drawer>
           </Hidden>
         </nav>
+
         <main className={classes.content}>
-          <div className={classes.toolbar} />
+          <Toolbar variant="dense" id="back-to-top-anchor" />
           {props.children}
           <ScrollTop {...props}>
             <Fab color="secondary" size="small" aria-label="scroll back to top">
@@ -167,7 +181,7 @@ function ResponsiveDrawer(props) {
   );
 }
 
-ResponsiveDrawer.propTypes = {
+Layout.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
@@ -175,4 +189,4 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 
-export default ResponsiveDrawer;
+export default Layout;

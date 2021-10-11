@@ -5,6 +5,7 @@ import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import MenuItem from "./components/MenuItem";
 import ParentsMenu from "./components/ParentsMenu";
+import * as CONST from "../../Constant";
 import { ROLES } from "../../Constant";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,12 +29,16 @@ export default function ASideMenuList() {
       aria-labelledby="nested-list-subheader"
       className={classes.root}
     >
-      <ListSubheader component="div" id="nested-list-subheader">
-        Menu
+      <ListSubheader
+        component="div"
+        id="nested-list-subheader"
+        style={{ height: 42 }}
+      >
+        {CONST.APP_INFO.name} - <small>{CONST.APP_INFO.version}</small>
       </ListSubheader>
-      <Divider />
+      <Divider style={{ marginBottom: 15 }} />
 
-      <MenuItem iconName="home" text="Home" path="/"></MenuItem>
+      <MenuItem iconName="home" text="Home" path="/home"></MenuItem>
 
       <MenuItem iconName="quiz" text="Test" path="/test"></MenuItem>
 

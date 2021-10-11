@@ -6,12 +6,14 @@ export const actionTypes = {
   UPDATE_DARK_MODE: "[UPDATE_DARK_MODE] Action",
   SHOW_POPUP_CHANGEPASSWORD: "[SHOW_POPUP_CHANGEPASSWORD] Action",
   HIDE_POPUP_CHANGEPASSWORD: "[HIDE_POPUP_CHANGEPASSWORD] Action",
+  UPDATE_TITLE: '[UPDATE_TITLE] Action'
 };
 
 const initialAuthState = {
   drawerOpen: false,
   darkMode: false,
   popupChangePassword: false,
+  currentTitle: ''
 };
 
 export const reducer = persistReducer(
@@ -29,6 +31,13 @@ export const reducer = persistReducer(
         return {
           ...state,
           darkMode: action.payload,
+        };
+      }
+
+      case actionTypes.UPDATE_TITLE: {
+        return {
+          ...state,
+          currentTitle: action.payload,
         };
       }
 
@@ -66,5 +75,8 @@ export const actions = {
   }),
   hidePopupChangePassword: (payload) => ({
     type: actionTypes.HIDE_POPUP_CHANGEPASSWORD,
+  }),
+  updateTitle: (payload) => ({
+    type: actionTypes.UPDATE_TITLE,payload
   }),
 };

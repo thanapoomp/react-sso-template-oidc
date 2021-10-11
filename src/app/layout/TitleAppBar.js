@@ -2,15 +2,12 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, Typography, IconButton } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import * as layoutRedux from "./_redux/layoutRedux";
 import * as CONST from "../../Constant";
 import UserMenu from "./components/UserMenu";
-
+import { useWindowSize } from "react-use";
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -22,11 +19,17 @@ const useStyles = makeStyles((theme) => ({
 export default function TitleAppBar() {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const { width } = useWindowSize();
+  const layoutReducer = useSelector(({layout}) => layout)
 
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed" style={{ marginBottom: 10 }} color="default">
-        <Toolbar variant="dense">
+    <AppBar
+      position="fixed"
+      color="default"
+      style={{ paddingLeft: width >= 1200 ? 240 : 0 }}
+    >
+      <Toolbar variant="dense">
+        {width < 1200 && (
           <IconButton
             edge="start"
             className={classes.menuButton}
@@ -38,15 +41,15 @@ export default function TitleAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="body1" className={classes.title}>
-            {CONST.APP_INFO.name}
-          </Typography>
+        )}
 
-          <React.Fragment>
-            <UserMenu />
-          </React.Fragment>
-        </Toolbar>
-      </AppBar>
-    </div>
+        <Typography variant="body1" className={classes.title}>
+          {layoutReducer.currentTitle}
+        </Typography>
+        <React.Fragment>
+          <UserMenu />
+        </React.Fragment>
+      </Toolbar>
+    </AppBar>
   );
 }

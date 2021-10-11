@@ -1,87 +1,158 @@
 import React from "react";
-import TitleAppBar from "./TitleAppBar";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import Toolbar from "@material-ui/core/Toolbar";
-import DrawerMenu from "./DrawerMenu";
-import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
-import { useSelector } from "react-redux";
 import { ThemeProvider, CssBaseline } from "@material-ui/core";
-import { createTheme } from "@material-ui/core/styles";
+import clsx from "clsx";
+import Drawer from "@material-ui/core/Drawer";
 import Fab from "@material-ui/core/Fab";
+import Toolbar from "@material-ui/core/Toolbar";
+import { makeStyles, createTheme } from "@material-ui/core/styles";
+import { useSelector, useDispatch } from "react-redux";
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import Zoom from "@material-ui/core/Zoom";
-import "../../index.css";
+import * as layoutRedux from "./_redux/layoutRedux";
+import ASideMenuList from "./ASideMenuList";
+import TitleAppBar from "./TitleAppBar";
+import { useWindowSize } from "react-use";
+
+const drawerWidth = 245;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    display: "flex",
+  },
+  scrollTopRoot: {
+    position: "fixed",
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
+  list: {
+    width: 240,
+  },
+  fullList: {
+    width: "auto",
+  },
+}));
+
+function ScrollTop(props) {
+  const { children } = props;
+  const classes = useStyles();
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 100,
+  });
+
+  const handleClick = (event) => {
+    const anchor = (event.target.ownerDocument || document).querySelector(
+      "#back-to-top-anchor"
+    );
+
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  return (
+    <Zoom in={trigger}>
+      <div
+        onClick={handleClick}
+        role="presentation"
+        className={classes.scrollTopRoot}
+      >
+        {children}
+      </div>
+    </Zoom>
+  );
+}
 
 function Layout(props) {
-  // const authReducer = useSelector(({ auth }) => auth);
+  const classes = useStyles();
   const layoutReducer = useSelector(({ layout }) => layout);
+  const dispatch = useDispatch();
+  const { width } = useWindowSize();
 
   const theme = createTheme({
-    palette: {
-      type: layoutReducer.darkMode ? "dark" : "light",
-    },
     typography: {
       fontFamily: ["Sarabun", "sans-serif"].join(","),
     },
   });
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      position: "fixed",
-      bottom: theme.spacing(2),
-      right: theme.spacing(2),
-    },
-  }));
+  const handleDrawerToggle = () => {
+    dispatch(layoutRedux.actions.updateDrawerOpen(!layoutReducer.drawerOpen));
+  };
 
-  function ScrollTop(props) {
-    const { children, window } = props;
-    const classes = useStyles();
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
-    const trigger = useScrollTrigger({
-      target: window ? window() : undefined,
-      disableHysteresis: true,
-      threshold: 100,
-    });
-
-    const handleClick = (event) => {
-      const anchor = (event.target.ownerDocument || document).querySelector(
-        "#back-to-top-anchor"
-      );
-
-      if (anchor) {
-        anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    };
-
-    return (
-      <Zoom in={trigger}>
-        <div onClick={handleClick} role="presentation" className={classes.root}>
-          {children}
-        </div>
-      </Zoom>
-    );
-  }
+  const list = (anchor) => (
+    <div
+      className={clsx(classes.list, {
+        [classes.fullList]: anchor === "top" || anchor === "bottom",
+      })}
+      role="presentation"
+    >
+      <ASideMenuList></ASideMenuList>
+    </div>
+  );
 
   return (
     <ThemeProvider theme={theme}>
-      <React.Fragment>
+      <div className={classes.root}>
         <CssBaseline />
-        <React.Fragment>
-          <TitleAppBar></TitleAppBar>
-          <DrawerMenu></DrawerMenu>
-        </React.Fragment>
+        <TitleAppBar></TitleAppBar>
+        <nav className={classes.drawer} aria-label="mailbox folders">
+          {/* xs sm md */}
+          {width < 1200 && (
+            <Drawer
+              variant="temporary"
+              anchor={theme.direction === "rtl" ? "right" : "left"}
+              open={layoutReducer.drawerOpen}
+              onClose={handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+            >
+              {list("left")}
+            </Drawer>
+          )}
 
-        <Toolbar id="back-to-top-anchor" />
-        <Container maxWidth="lg">{props.children}</Container>
-        <ScrollTop {...props}>
-          <Fab color="secondary" size="small" aria-label="scroll back to top">
-            <KeyboardArrowUpIcon />
-          </Fab>
-        </ScrollTop>
-      </React.Fragment>
+          {/* Lg */}
+          {width >= 1200 && (
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              variant="permanent"
+              open
+            >
+              {list("left")}
+            </Drawer>
+          )}
+        </nav>
+
+        <main className={classes.content}>
+          {width >= 1200 && <div style={{ width: 240 }}></div>}
+
+          <div style={{ flexGrow: 1, padding: theme.spacing(3) }}>
+            <Toolbar variant="dense" id="back-to-top-anchor" />
+            {props.children}
+            <ScrollTop {...props}>
+              <Fab
+                color="secondary"
+                size="small"
+                aria-label="scroll back to top"
+              >
+                <KeyboardArrowUpIcon />
+              </Fab>
+            </ScrollTop>
+          </div>
+        </main>
+      </div>
     </ThemeProvider>
   );
 }

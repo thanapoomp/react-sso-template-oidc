@@ -6,7 +6,6 @@ import {
   MenuItem,
   Menu,
   Divider,
-  Tooltip,
 } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import Link from "@material-ui/core/Link";

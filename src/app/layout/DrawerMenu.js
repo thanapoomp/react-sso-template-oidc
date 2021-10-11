@@ -8,7 +8,7 @@ import ASideMenuList from "./ASideMenuList";
 
 const useStyles = makeStyles({
   list: {
-    width: 250,
+    width: 240,
   },
   fullList: {
     width: "auto",

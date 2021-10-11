@@ -4,7 +4,8 @@ import * as CONST from "../../../../Constant";
 
 function SilentCallback() {
   const userStore = new WebStorageStateStore({
-    store: localStorage,
+    // store: localStorage,
+    store: sessionStorage,
   });
 
   const userManager = new UserManager({

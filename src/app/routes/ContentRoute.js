@@ -4,8 +4,14 @@ import { Route } from "react-router-dom";
 import { Content } from "./Content";
 import { Helmet } from "react-helmet";
 import * as CONST from "../../Constant";
+import * as layoutRedux from '../layout/_redux/layoutRedux'
+import {useDispatch} from 'react-redux'
 
 export function ContentRoute({ children, component, render, ...props }) {
+  const dispatch = useDispatch()
+  React.useEffect(() => {
+    dispatch(layoutRedux.actions.updateTitle(props.title))
+  }, [props.title])
   return (
     <Route {...props}>
       {(routeProps) => {

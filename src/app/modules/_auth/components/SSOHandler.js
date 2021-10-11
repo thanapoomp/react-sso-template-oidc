@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { UserManager, WebStorageStateStore } from "oidc-client";
 import { useHistory } from "react-router";
@@ -12,12 +13,58 @@ function SSOHandler(props) {
   const dispatch = useDispatch();
   const [loggedIn, setLoggedIn] = React.useState(false);
   const userStore = new WebStorageStateStore({
-    store: localStorage,
+    // store: localStorage,
+    store: sessionStorage,
   });
 
   const userManager = new UserManager({
     ...CONST.SSO_CONFIG,
     userStore: userStore,
+  });
+
+  userManager.events.addUserSignedOut(() => {
+    //TODO: Remove redux auth values
+    userManager.removeUser().then(() => {
+      userManager.clearStaleState().then(() => {
+        history.push("/");
+      });
+    });
+  });
+
+  userManager.events.addAccessTokenExpiring(() => {
+    console.log("token expiring...");
+  });
+
+  userManager.events.addSilentRenewError(() => {
+    console.log("renew error");
+  });
+
+  userManager.events.addUserSignedIn((res) => {
+    console.log("logged in");
+    getUser();
+  });
+
+  userManager.events.addAccessTokenExpired(() => {
+    console.log("expired");
+    //Remove redux auth values
+    userManager.signinRedirect();
+    dispatch(authRedux.actions.logout());
+  });
+
+  userManager.events.addUserLoaded(() => {
+    console.log("user loaded");
+    getUser();
+  });
+
+  userManager.events.addUserSessionChanged(() => {
+    console.log("session changed");
+  });
+
+  userManager.events.addUserUnloaded(() => {
+    console.log("user unloaded");
+    //Remove redux auth values
+    userManager.signinRedirect();
+    dispatch(authRedux.actions.logout());
   });
 
   const getUser = () => {
@@ -44,51 +91,6 @@ function SSOHandler(props) {
 
   React.useEffect(() => {
     getUser();
-
-    userManager.events.addUserSignedOut(() => {
-      //TODO: Remove redux auth values
-      userManager.removeUser().then(() => {
-        userManager.clearStaleState().then(() => {
-          history.push("/");
-        });
-      });
-    });
-
-    userManager.events.addAccessTokenExpiring(() => {
-      console.log("token expiring...");
-    });
-
-    userManager.events.addSilentRenewError(() => {
-      console.log("renew error");
-    });
-
-    userManager.events.addUserSignedIn((res) => {
-      console.log("logged in");
-      getUser();
-    });
-
-    userManager.events.addAccessTokenExpired(() => {
-      console.log("expired");
-      //Remove redux auth values
-      dispatch(authRedux.actions.logout());
-      userManager.signinRedirect();
-    });
-
-    userManager.events.addUserLoaded(() => {
-      console.log("user loaded");
-      getUser();
-    });
-
-    userManager.events.addUserSessionChanged(() => {
-      console.log("session changed");
-    });
-
-    userManager.events.addUserUnloaded(() => {
-      console.log("user unloaded");
-      //Remove redux auth values
-      dispatch(authRedux.actions.logout());
-      userManager.signinRedirect();
-    });
   }, []);
 
   return (
