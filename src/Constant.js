@@ -45,7 +45,7 @@ export const SSO_CONFIG = {
 
 export const API_URL =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-    ? "https://localhost:44388/api" //dev 
+    ? "https://localhost:44388/api" //dev
     : "https://localhost:44388/api"; // Production
 
 export const ROLES = {

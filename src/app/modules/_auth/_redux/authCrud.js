@@ -22,3 +22,21 @@ export function getRoles(token) {
 
   return result;
 }
+
+export function getPermissions(token) {
+  let decoded = jwt_decode(token);
+  let result = [];
+
+  if (!decoded.permission) {
+    return [];
+  }
+
+  //push permission ลง array(fix bug permission --> "p","e","r","m","i","s","s","i","o","n")
+  if (Array.isArray(decoded.permission)) {
+    result = decoded.permission;
+  } else {
+    result.push(decoded.permission);
+  }
+
+  return result;
+}

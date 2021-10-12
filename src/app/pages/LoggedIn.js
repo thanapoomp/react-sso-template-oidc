@@ -53,9 +53,9 @@ function LoggedIn(props) {
       setToken(tk);
       axios
         .get(txtAPIPath, {
-          headers: {
-            Authorization: `bearer ${token}`,
-          },
+          // headers: {
+          //   Authorization: `bearer ${token}`,
+          // },
         })
         .then((res) => {
           alert(JSON.stringify(res.data.data));
@@ -77,7 +77,8 @@ function LoggedIn(props) {
           },
         })
         .then((res) => {
-          alert(JSON.stringify(res.data.data));
+          alert("Cannot test because bearer is already bundle in axios");
+          //alert(JSON.stringify(res.data.data));
         })
         .catch((err) => {
           alert(err.message);
@@ -91,7 +92,7 @@ function LoggedIn(props) {
       <h1>Call API! 🎉</h1>
       <textarea
         style={{ width: "100%", height: "100px" }}
-        value={token}
+        value={authReducer.authToken}
       ></textarea>
 
       <br />
