@@ -2,7 +2,7 @@
 import React from "react";
 import { UserManager, WebStorageStateStore } from "oidc-client";
 import { useHistory } from "react-router";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Grid, Typography } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import * as authRedux from "../_redux/authRedux";
 import * as authCRUD from "../_redux/authCrud";
@@ -97,7 +97,39 @@ function SSOHandler(props) {
 
   return (
     <React.Fragment>
-      {!loggedIn && <CircularProgress></CircularProgress>}
+      {!loggedIn && (
+        <Grid
+          container
+          alignContent="center"
+          justifyContent="center"
+          direction="row"
+        >
+          <Grid
+            item
+            container
+            alignContent="center"
+            justifyContent="center"
+            alignItems="center"
+            xs={12}
+            lg={12}
+            style={{ marginTop: 30 }}
+          >
+            <CircularProgress></CircularProgress>
+          </Grid>
+          <Grid
+            item
+            container
+            alignContent="center"
+            justifyContent="center"
+            alignItems="center"
+            xs={12}
+            lg={12}
+            style={{ marginTop: 30 }}
+          >
+            <Typography>Redirecting to login page ...</Typography>
+          </Grid>
+        </Grid>
+      )}
       {loggedIn && props.children}
     </React.Fragment>
   );

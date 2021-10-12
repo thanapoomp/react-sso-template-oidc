@@ -1,7 +1,6 @@
 export const actionTypes = {
   Login: "[Login] Action",
   Logout: "[Logout] Action",
-  RenewToken: "[Renew Token] Action",
 };
 
 const initialAuthState = {
@@ -30,16 +29,6 @@ export const reducer = (state = initialAuthState, action) => {
         authToken: null,
         roles: [],
         permission: [],
-      };
-    }
-
-    case actionTypes.RenewToken: {
-      return {
-        ...state,
-        user: action.payload.user,
-        authToken: action.payload.authToken,
-        roles: [...action.payload.roles],
-        permission: [...action.payload.permission],
       };
     }
 
