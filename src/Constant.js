@@ -48,9 +48,8 @@ export const API_URL =
     ? "https://localhost:44388/api" //dev
     : "https://localhost:44388/api"; // Production
 
-export const ROLES = {
-  user: "User",
-  Manager: "Supervisor",
-  admin: "Admin",
-  developer: "Developer",
+export const PERMISSIONS = {
+  employee_read: "employee:read",
+  employee_write: "employee:write",
+  employee_delete: "employee:delete",
 };

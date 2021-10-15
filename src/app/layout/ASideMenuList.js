@@ -6,7 +6,7 @@ import List from "@material-ui/core/List";
 import MenuItem from "./components/MenuItem";
 import ParentsMenu from "./components/ParentsMenu";
 import * as CONST from "../../Constant";
-import { ROLES } from "../../Constant";
+import { PERMISSIONS } from "../../Constant";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,6 +44,10 @@ export default function ASideMenuList() {
       <MenuItem iconName="book" text="Call API" path="/loggedin"></MenuItem>
       <ParentsMenu iconName="admin_panel_settings" text="Admin">
         <MenuItem iconName="star" text="Title" path="/title"></MenuItem>
+      </ParentsMenu>
+
+      <ParentsMenu iconName="admin_panel_settings" text="Test Permission" permissions={[PERMISSIONS.employee_delete]}>
+        <MenuItem iconName="star" text="Title" path="/permissionTest" permissions={[PERMISSIONS.employee_delete]}></MenuItem>
       </ParentsMenu>
       
     </List>

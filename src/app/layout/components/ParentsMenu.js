@@ -17,13 +17,13 @@ function ParentsMenu(props) {
   const authReducer = useSelector(({ auth }) => auth);
   React.useEffect(() => {
     //set Show menu
-    if (props.roles.length === 0) {
-      //allow all roles
+    if (props.permissions.length === 0) {
+      //allow all permissions
       setShowMenu(true);
     } else {
       // check if route is restricted by role
-      let intersection = props.roles.filter((x) =>
-        authReducer.roles.includes(x)
+      let intersection = props.permissions.filter((x) =>
+        authReducer.permissions.includes(x)
       );
       if (intersection.length > 0) {
         setShowMenu(true);
@@ -59,13 +59,13 @@ function ParentsMenu(props) {
 ParentsMenu.propTypes = {
   iconName: PropTypes.string,
   text: PropTypes.string,
-  roles: PropTypes.array,
+  permissions: PropTypes.array,
 };
 
 ParentsMenu.defaultProps = {
   iconName: "",
   text: "",
-  roles: [],
+  permissions: [],
 };
 
 export default ParentsMenu;

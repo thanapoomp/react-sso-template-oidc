@@ -20,13 +20,13 @@ function MenuItem(props) {
 
   React.useEffect(() => {
     //set Show menu
-    if (props.roles.length === 0) {
-      //allow all roles
+    if (props.permissions.length === 0) {
+      //allow all permissions
       setShowMenu(true);
     } else {
       // check if route is restricted by role
-      let intersection = props.roles.filter((x) =>
-        authReducer.roles.includes(x)
+      let intersection = props.permissions.filter((x) =>
+        authReducer.permissions.includes(x)
       );
       if (intersection.length > 0) {
         setShowMenu(true);
@@ -67,14 +67,14 @@ MenuItem.propTypes = {
   iconName: PropTypes.string,
   text: PropTypes.string,
   path: PropTypes.string,
-  roles: PropTypes.array,
+  permissions: PropTypes.array,
 };
 
 MenuItem.defaultProps = {
   iconName: "",
   text: "",
   path: "",
-  roles: [],
+  permissions: [],
 };
 
 export default MenuItem;

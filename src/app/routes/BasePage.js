@@ -1,11 +1,13 @@
 import React from "react";
 import { Redirect, Switch, Route } from "react-router-dom";
 import { ContentRoute } from "./ContentRoute";
+import PrivateRoute from "./PrivateRoute";
 import ErrorUnAuthorized from "../pages/ErrorUnAuthorized";
 import Home from "../pages/Home";
 import TitleManage from "../modules/Title/pages/TitleManage";
 import Test from "../pages/Test";
 import LoggedIn from "../pages/LoggedIn";
+import {PERMISSIONS} from '../../Constant'
 
 export default function BasePage(props) {
   return (
@@ -23,11 +25,20 @@ export default function BasePage(props) {
           component={LoggedIn}
         />
 
-        <ContentRoute
+        <PrivateRoute
           exact
           path="/title"
+          permissions={[]}
           component={TitleManage}
           title="Manage Title"
+        />
+
+        <PrivateRoute
+          exact
+          path="/permissionTest"
+          permissions={[PERMISSIONS.employee_delete]}
+          component={Test}
+          title="Test Permission"
         />
 
         {/* nothing match - redirect to error */}

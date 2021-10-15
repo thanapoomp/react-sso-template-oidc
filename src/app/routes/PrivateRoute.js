@@ -4,17 +4,17 @@ import { Route, Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import * as CONST from "../../Constant";
 
-function PrivateRoute({ component: Component, roles,title, ...rest }) {
+function PrivateRoute({ component: Component, permissions,title, ...rest }) {
   const authReducer = useSelector(({ auth }) => auth);
   return (
     <Route
       {...rest}
       render={(props) => {
-        roles = roles === undefined ? [] : roles;
+        permissions = permissions === undefined ? [] : permissions;
 
-        if (roles.length > 0) {
+        if (permissions.length > 0) {
           // check if route is restricted by role
-          let intersection = roles.filter((x) => authReducer.roles.includes(x));
+          let intersection = permissions.filter((x) => authReducer.permissions.includes(x));
           if (intersection.length === 0) {
             // role not authorised so redirect to home page
             return <Redirect to={{ pathname: "/errorUnAuthorized" }} />;
