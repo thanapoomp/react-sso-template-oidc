@@ -23,9 +23,6 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  content: {
-    display: "flex",
-  },
   scrollTopRoot: {
     position: "fixed",
     bottom: theme.spacing(2),
@@ -135,23 +132,23 @@ function Layout(props) {
           )}
         </nav>
 
-        <main className={classes.content}>
-          {width >= 1200 && <div style={{ width: 240 }}></div>}
-
-          <div style={{ flexGrow: 1, padding: theme.spacing(3) }}>
-            <Toolbar variant="dense" id="back-to-top-anchor" />
-            {props.children}
-            <ScrollTop {...props}>
-              <Fab
-                color="secondary"
-                size="small"
-                aria-label="scroll back to top"
-              >
-                <KeyboardArrowUpIcon />
-              </Fab>
-            </ScrollTop>
-          </div>
-        </main>
+        <div
+          style={{
+            flexGrow: 1,
+            paddingTop: 15,
+            paddingBottom: 10,
+            paddingRight: 10,
+            paddingLeft: width >= 1200 ? 250 : 10,
+          }}
+        >
+          <Toolbar variant="dense" id="back-to-top-anchor" />
+          {props.children}
+          <ScrollTop {...props}>
+            <Fab color="secondary" size="small" aria-label="scroll back to top">
+              <KeyboardArrowUpIcon />
+            </Fab>
+          </ScrollTop>
+        </div>
       </div>
     </ThemeProvider>
   );
