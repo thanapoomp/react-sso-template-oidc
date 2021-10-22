@@ -5,12 +5,14 @@ import * as auth from "../app/modules/_auth/_redux/authRedux";
 import * as layout from "../app/layout/_redux/layoutRedux";
 import * as demo from "../app/modules/_demo/_redux/demoRedux";
 import * as title from "../app/modules/Title/titleRedux";
+import * as employee from '../app/modules/Employee/employeeRedux'
 
 export const rootReducer = combineReducers({
   auth: auth.reducer,
   layout: layout.reducer,
   demo: demo.reducer,
   title: title.reducer,
+  employee: employee.reducer
 });
 
 export function* rootSaga() {

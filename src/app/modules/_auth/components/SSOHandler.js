@@ -3,7 +3,7 @@ import React from "react";
 import { UserManager, WebStorageStateStore } from "oidc-client";
 import { useHistory } from "react-router";
 import { CircularProgress, Grid, Typography } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as authRedux from "../_redux/authRedux";
 import * as authCRUD from "../_redux/authCrud";
 import * as CONST from "../../../../Constant";
@@ -11,10 +11,10 @@ import * as CONST from "../../../../Constant";
 function SSOHandler(props) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const authReducer = useSelector(({ auth }) => auth);
+
   const userStore = new WebStorageStateStore({
-    // store: localStorage,
-    store: sessionStorage,
+    store: localStorage,
   });
 
   const userManager = new UserManager({
@@ -24,6 +24,7 @@ function SSOHandler(props) {
 
   userManager.events.addUserSignedOut(() => {
     //TODO: Remove redux auth values
+    dispatch(authRedux.actions.logout());
     userManager.removeUser().then(() => {
       userManager.clearStaleState().then(() => {
         history.push("/");
@@ -41,14 +42,14 @@ function SSOHandler(props) {
 
   userManager.events.addUserSignedIn((res) => {
     console.log("logged in");
-    getUser();
+    // getUser();
   });
 
   userManager.events.addAccessTokenExpired(() => {
     console.log("expired");
     //Remove redux auth values
-    userManager.signinRedirect();
     dispatch(authRedux.actions.logout());
+    userManager.signinRedirect();
   });
 
   userManager.events.addUserLoaded(() => {
@@ -56,15 +57,15 @@ function SSOHandler(props) {
     getUser();
   });
 
-  userManager.events.addUserSessionChanged(() => {
-    console.log("session changed");
-  });
+  // userManager.events.addUserSessionChanged(() => {
+  //   console.log("session changed");
+  // });
 
   userManager.events.addUserUnloaded(() => {
     console.log("user unloaded");
     //Remove redux auth values
-    userManager.signinRedirect();
     dispatch(authRedux.actions.logout());
+    userManager.signinRedirect();
   });
 
   const getUser = () => {
@@ -72,15 +73,15 @@ function SSOHandler(props) {
       .getUser()
       .then((user) => {
         if (user) {
-          // console.log(user);
+          //console.log(user);
           //keep user detail in redux
           let payload = {
             user: authCRUD.getUserByToken(user.id_token),
             authToken: user.access_token,
             roles: authCRUD.getRoles(user.id_token),
             permissions: authCRUD.getPermissions(user.id_token),
+            userManager: userManager
           };
-          setLoggedIn(true);
           dispatch(authRedux.actions.login(payload));
         } else {
           //Remove redux auth values
@@ -97,7 +98,7 @@ function SSOHandler(props) {
 
   return (
     <React.Fragment>
-      {!loggedIn && (
+      {!authReducer.user && (
         <Grid
           container
           alignContent="center"
@@ -130,7 +131,7 @@ function SSOHandler(props) {
           </Grid>
         </Grid>
       )}
-      {loggedIn && props.children}
+      {authReducer.user && props.children}
     </React.Fragment>
   );
 }

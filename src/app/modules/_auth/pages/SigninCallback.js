@@ -5,7 +5,7 @@ import * as CONST from "../../../../Constant";
 function SigninCallback() {
   const userStore = new WebStorageStateStore({
     // store: localStorage,
-    store: sessionStorage,
+    store: localStorage,
   });
 
   const userManager = new UserManager({

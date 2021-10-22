@@ -35,18 +35,13 @@ export const SSO_CONFIG = {
   response_type: "code",
   scope: "openid profile roles employeeapi email",
   automaticSilentRenew: true,
-  monitorSession:
-    // if deploy on same domain set = true,
-    // if deploy on different domain must set = false
-    !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-      ? true
-      : true,
+  monitorSession:true
 };
 
 export const API_URL =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-    ? "https://localhost:44388/api" //dev
-    : "https://localhost:44388/api"; // Production
+    ? "https://demoempapi.devsiamsmile.com/api" //dev
+    : "https://demoempapi.devsiamsmile.com/api"; // Production
 
 export const PERMISSIONS = {
   employee_read: "employee:read",

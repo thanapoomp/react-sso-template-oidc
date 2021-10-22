@@ -1,5 +1,4 @@
 import React from "react";
-import { UserManager, WebStorageStateStore } from "oidc-client";
 import {
   Typography,
   IconButton,
@@ -10,23 +9,13 @@ import {
 import Chip from "@material-ui/core/Chip";
 import Link from "@material-ui/core/Link";
 import UserProfile from "./UserProfile";
-import Icon from "@material-ui/core/Icon";
+// import Icon from "@material-ui/core/Icon";
 import { useSelector } from "react-redux";
-import * as CONST from "../../../Constant";
-import * as swal from "../../modules/_common/components/SweetAlert";
 
 function UserMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const authReducer = useSelector(({ auth }) => auth);
-  const userStore = new WebStorageStateStore({
-    store: localStorage,
-  });
-
-  const userManager = new UserManager({
-    ...CONST.SSO_CONFIG,
-    userStore: userStore,
-  });
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -42,13 +31,7 @@ function UserMenu() {
   };
 
   const logoutClick = () => {
-    swal
-      .swalConfirm("ยืนยัน?", "คุณต้องการออกจากระบบใช่หรือไม่?")
-      .then((res) => {
-        if (res.isConfirmed) {
-          userManager.signoutRedirect();
-        }
-      });
+    authReducer.userManager.signoutPopup();
   };
 
   return (
@@ -93,9 +76,9 @@ function UserMenu() {
             <Chip
               size="small"
               style={{ marginTop: 10 }}
-              icon={
-                <Icon style={{ fontSize: 20, marginLeft: 11 }}>logout</Icon>
-              }
+              // icon={
+              //   <Icon style={{ fontSize: 20, marginLeft: 11 }}>logout</Icon>
+              // }
               color="default"
             />
             <Link
@@ -117,3 +100,6 @@ function UserMenu() {
 }
 
 export default UserMenu;
+
+
+

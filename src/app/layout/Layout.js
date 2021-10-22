@@ -116,7 +116,7 @@ function Layout(props) {
             >
               {list("left")}
             </Drawer>
-          )}
+           )} 
 
           {/* Lg */}
           {width >= 1200 && (
@@ -129,7 +129,7 @@ function Layout(props) {
             >
               {list("left")}
             </Drawer>
-          )}
+           )} 
         </nav>
 
         <div

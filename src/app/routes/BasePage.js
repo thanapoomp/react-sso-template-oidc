@@ -6,8 +6,8 @@ import ErrorUnAuthorized from "../pages/ErrorUnAuthorized";
 import Home from "../pages/Home";
 import TitleManage from "../modules/Title/pages/TitleManage";
 import Test from "../pages/Test";
-import LoggedIn from "../pages/LoggedIn";
-import {PERMISSIONS} from '../../Constant'
+import { PERMISSIONS } from "../../Constant";
+import EmployeeManage from "../modules/Employee/pages/EmployeeManage";
 
 export default function BasePage(props) {
   return (
@@ -18,13 +18,6 @@ export default function BasePage(props) {
         <ContentRoute exact title="home" path="/" component={Home} />
         <ContentRoute exact title="home" path="/home" component={Home} />
         <ContentRoute exact path="/test" component={Test} title="Test" />
-        <ContentRoute
-          exact
-          title="LoggedIn"
-          path="/loggedin"
-          component={LoggedIn}
-        />
-
         <PrivateRoute
           exact
           path="/title"
@@ -39,6 +32,14 @@ export default function BasePage(props) {
           permissions={[PERMISSIONS.employee_delete]}
           component={Test}
           title="Test Permission"
+        />
+
+        <PrivateRoute
+          exact
+          path="/employeeManage"
+          permissions={[PERMISSIONS.employee_read]}
+          component={EmployeeManage}
+          title="Employee Manage"
         />
 
         {/* nothing match - redirect to error */}

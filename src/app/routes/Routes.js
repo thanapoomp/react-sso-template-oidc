@@ -16,7 +16,6 @@ import SilentCallback from "../modules/_auth/pages/SilentCallback";
 
 export function Routes() {
   return (
-    <React.Fragment>
       <Switch>
         <ContentRoute
           exact
@@ -38,6 +37,5 @@ export function Routes() {
         </SSOHandler>
         <Redirect to="/error404"></Redirect>
       </Switch>
-    </React.Fragment>
   );
 }

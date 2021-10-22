@@ -8,6 +8,7 @@ const initialAuthState = {
   authToken: null,
   roles: [],
   permissions: [],
+  userManager: {}
 };
 
 export const reducer = (state = initialAuthState, action) => {
@@ -19,6 +20,7 @@ export const reducer = (state = initialAuthState, action) => {
         authToken: action.payload.authToken,
         roles: [...action.payload.roles],
         permissions: [...action.payload.permissions],
+        userManager: action.payload.userManager
       };
     }
 
@@ -29,6 +31,7 @@ export const reducer = (state = initialAuthState, action) => {
         authToken: null,
         roles: [],
         permissions: [],
+        userManager: {}
       };
     }
 

@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, Typography, IconButton } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import { useDispatch,useSelector } from "react-redux";
+// import MenuIcon from "@material-ui/icons/Menu";
+import Icon from '@material-ui/core/Icon'
+import { useDispatch, useSelector } from "react-redux";
 import * as layoutRedux from "./_redux/layoutRedux";
 import * as CONST from "../../Constant";
 import UserMenu from "./components/UserMenu";
@@ -20,7 +21,7 @@ export default function TitleAppBar() {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { width } = useWindowSize();
-  const layoutReducer = useSelector(({layout}) => layout)
+  const layoutReducer = useSelector(({ layout }) => layout);
 
   return (
     <AppBar
@@ -39,7 +40,7 @@ export default function TitleAppBar() {
             color="inherit"
             aria-label="menu"
           >
-            <MenuIcon />
+            <Icon>menu</Icon>
           </IconButton>
         )}
 
