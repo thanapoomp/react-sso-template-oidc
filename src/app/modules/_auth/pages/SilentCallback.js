@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { UserManager, WebStorageStateStore } from "oidc-client";
 import * as CONST from "../../../../Constant";
@@ -14,7 +15,7 @@ function SilentCallback() {
   });
 
   React.useEffect(() => {
-    console.log("start renew token!!");
+    // console.log("start renew token!!");
     userManager
       .signinSilentCallback()
       .then((user) => {

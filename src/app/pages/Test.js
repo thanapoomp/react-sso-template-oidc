@@ -1,154 +1,33 @@
-import React from "react";
+import React from 'react'
 
 function Test() {
-  return (
-    <div>
-      Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Test
-      <br></br>Tests
-    </div>
-  );
+  const [state, setState] = React.useState({})
+    const getData=()=>{
+        fetch('config.json'
+        ,{
+          headers : {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+           }
+        }
+        )
+          .then(function(response){
+            return response.json();
+          })
+          .then(function(myJson) {
+            setState(myJson)
+          });
+      }
+
+      React.useEffect(() => {
+        getData()
+      }, [])
+
+    return (
+        <div>
+          {JSON.stringify(state)}
+        </div>
+    )
 }
 
-export default Test;
+export default Test

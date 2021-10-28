@@ -1,3 +1,4 @@
+
 export const actionTypes = {
   Login: "[Login] Action",
   Logout: "[Logout] Action",
@@ -8,7 +9,8 @@ const initialAuthState = {
   authToken: null,
   roles: [],
   permissions: [],
-  userManager: {}
+  userManager: {},
+  client_version: ''
 };
 
 export const reducer = (state = initialAuthState, action) => {
@@ -20,7 +22,8 @@ export const reducer = (state = initialAuthState, action) => {
         authToken: action.payload.authToken,
         roles: [...action.payload.roles],
         permissions: [...action.payload.permissions],
-        userManager: action.payload.userManager
+        userManager: action.payload.userManager,
+        client_version: action.payload.client_version
       };
     }
 
@@ -31,7 +34,8 @@ export const reducer = (state = initialAuthState, action) => {
         authToken: null,
         roles: [],
         permissions: [],
-        userManager: {}
+        userManager: {},
+        client_version: ''
       };
     }
 

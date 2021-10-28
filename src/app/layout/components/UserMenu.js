@@ -9,8 +9,9 @@ import {
 import Chip from "@material-ui/core/Chip";
 import Link from "@material-ui/core/Link";
 import UserProfile from "./UserProfile";
-// import Icon from "@material-ui/core/Icon";
 import { useSelector } from "react-redux";
+import * as CONST from '../../../Constant';
+import * as swal from '../../modules/_common/components/SweetAlert'
 
 function UserMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -26,12 +27,17 @@ function UserMenu() {
   };
 
   const handleProfile = () => {
-    //window.location = "https://demoauthserver.devsiamsmile.com/";
-    window.open("https://demoauthserver.devsiamsmile.com/");
+    window.open(CONST.SSO_CONFIG.authority);
   };
 
   const logoutClick = () => {
-    authReducer.userManager.signoutPopup();
+    swal
+      .swalConfirm("Confirm logout?", "ยืนยันออกจากระบบใช่หรือไม่?")
+      .then((res) => {
+        if (res.isConfirmed) {
+          authReducer.userManager.signoutPopup();
+        }
+      });
   };
 
   return (

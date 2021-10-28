@@ -9,6 +9,7 @@ import { BrowserRouter } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Routes } from "./app/routes/Routes";
+import VersionChecker from "./app/modules/_auth/components/VersionChecker";
 
 const queryClient = new QueryClient();
 
@@ -25,7 +26,7 @@ export default function App({ store, persistor, basename }) {
             <Routes />
           </BrowserRouter>
           <ReactQueryDevtools initialIsOpen={false} />
-          {/* <VersionChecker></VersionChecker> */}
+          <VersionChecker></VersionChecker>
         </QueryClientProvider>
       </PersistGate>
     </Provider>

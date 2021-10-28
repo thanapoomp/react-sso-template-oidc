@@ -5,6 +5,12 @@ export function getUserByToken(token) {
   return decoded;
 }
 
+export function getClientVersion(token) {
+  debugger
+  let decoded = jwt_decode(token)["client_version"];
+  return decoded;
+}
+
 export function getRoles(token) {
   let decoded = jwt_decode(token);
   let result = [];

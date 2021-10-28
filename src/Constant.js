@@ -1,18 +1,14 @@
 export const APP_INFO = {
   name: "client1",
-  version: "0.1",
+  version: "1.0.1",
   since: "2021",
   description: "Client1 Website",
   contactUrl: "https://client1.thanapoom.cc",
 };
 
 export const VERSION_CHECKER = {
-  ENABLE_VERSION_CHECKER: false,
-  CHECKVERSION_EVERY_MINUTE: 10,
-  VERSIONCHECK_URL:
-    !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-      ? "https://localhost:44388/api/SystemConfig" //dev
-      : "https://localhost:44388/api/SystemConfig", // Production
+  ENABLE_VERSION_CHECKER: true,
+  CHECKVERSION_EVERY_MINUTE: 5
 };
 
 export const SSO_CONFIG = {
@@ -35,7 +31,7 @@ export const SSO_CONFIG = {
   response_type: "code",
   scope: "openid profile roles employeeapi email",
   automaticSilentRenew: true,
-  monitorSession:true
+  monitorSession:true,
 };
 
 export const API_URL =

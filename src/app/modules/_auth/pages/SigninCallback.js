@@ -15,7 +15,6 @@ function SigninCallback() {
 
   React.useEffect(() => {
     userManager.signinRedirectCallback().then(function (user) {
-      debugger
       window.history.replaceState(
         {},
         window.document.title,
