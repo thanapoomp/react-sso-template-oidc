@@ -25,13 +25,20 @@ function VersionChecker(props) {
             let serverVersion = configData.version;
             let clientVersion = CONST.APP_INFO.version;
             if (serverVersion !== clientVersion) {
-              swal
-              .swalConfirm("Warning", "your version is out-dated, refresh now?")
-              .then((res) => {
-                if (res.isConfirmed) {
-                  emptyCache();
-                }
-              });
+              if (CONST.VERSION_CHECKER.CONFIRM_BEFORE_REFRESH) {
+                swal
+                  .swalConfirm(
+                    "Warning",
+                    "your version is out-dated, refresh now?"
+                  )
+                  .then((res) => {
+                    if (res.isConfirmed) {
+                      emptyCache();
+                    }
+                  });
+              } else {
+                emptyCache();
+              }
             }
           })
           .catch((err) => {
