@@ -1,6 +1,6 @@
 export const APP_INFO = {
   name: "client1",
-  version: "1.0.1",
+  version: "1.0.2",
   since: "2021",
   description: "Client1 Website",
   contactUrl: "https://client1.thanapoom.cc",
