@@ -51,6 +51,7 @@ export default function FormikTextNumber(props) {
         props.formik.errors[`${props.name}`]
       }
       disabled={props.disabled}
+      placeholder={props.placeholder}
       InputProps={{
         inputComponent: NumberFormatCustom,
       }}
@@ -64,6 +65,7 @@ FormikTextNumber.propTypes = {
   label: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  placeholder: PropTypes.string
 };
 
 // Same approach for defaultProps too
@@ -73,4 +75,5 @@ FormikTextNumber.defaultProps = {
   label: "Do not forget to set label",
   disabled: false,
   required: false,
+  placeholder: ''
 };
