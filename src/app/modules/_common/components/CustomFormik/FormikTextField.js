@@ -25,6 +25,7 @@ function FormikTextField(props) {
         props.formik.errors[`${props.name}`] &&
         props.formik.touched[`${props.name}`]
       }
+      placeholder={props.placeholder}
       helperText={
         props.formik.errors[`${props.name}`] &&
         props.formik.touched[`${props.name}`] &&
@@ -44,6 +45,7 @@ FormikTextField.propTypes = {
   required: PropTypes.bool,
   password: PropTypes.bool,
   autoFocus: PropTypes.bool,
+  placeholder: PropTypes.string
 };
 
 // Same approach for defaultProps too
@@ -55,6 +57,7 @@ FormikTextField.defaultProps = {
   required: false,
   password: false,
   autoFocus: false,
+  placeholder: ''
 };
 
 export default FormikTextField;

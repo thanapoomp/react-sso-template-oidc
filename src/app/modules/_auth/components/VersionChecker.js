@@ -22,9 +22,7 @@ function VersionChecker(props) {
           })
           .then(function (configData) {
             // get config
-            let serverVersion = configData.version;
-            let clientVersion = CONST.APP_INFO.version;
-            if (serverVersion !== clientVersion) {
+            if (configData.version !== CONST.APP_INFO.version) {
               if (CONST.VERSION_CHECKER.CONFIRM_BEFORE_REFRESH) {
                 swal
                   .swalConfirm(
