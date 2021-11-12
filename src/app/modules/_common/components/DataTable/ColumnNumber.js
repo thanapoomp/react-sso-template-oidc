@@ -9,7 +9,6 @@ import PropTypes from "prop-types";
 function ColumnNumber(props) {
 
   return (
-    <div>
       <Grid
         style={{ padding: 0, margin: 0 }}
         container
@@ -19,7 +18,6 @@ function ColumnNumber(props) {
       >
         <NumberFormat {...props} value={props.value} displayType="text" />
       </Grid>
-    </div>
   );
 }
 

@@ -22,7 +22,7 @@
     "js-file-download": "^0.4.12",
     "jwt-decode": "^3.1.2",
     "material-ui-dropzone": "^3.5.0",
-    "mui-datatables": "^3.7.7",
+    "mui-datatables": "^3.8.2",
     "oidc-client": "^1.11.5",
     "pdfmake": "^0.2.0",
     "qrcode.react": "^1.0.1",

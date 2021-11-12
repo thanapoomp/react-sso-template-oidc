@@ -2,7 +2,7 @@
 /* eslint-disable no-restricted-imports */
 
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid,Typography } from "@material-ui/core";
 import PropTypes from "prop-types";
 
 require("dayjs/locale/th");
@@ -18,8 +18,8 @@ function ColumnDateTime(props) {
       justifyContent="flex-start"
       alignItems="center"
     >
-      {props.value && dayjs(props.value).format(props.format)}
-      {!props.value && props.nullValueText}
+      {props.value && <Typography>{dayjs(props.value).format(props.format)}</Typography>}
+      {!props.value && <Typography>{props.nullValueText}</Typography>}
     </Grid>
   );
 }

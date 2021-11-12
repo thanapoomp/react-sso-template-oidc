@@ -1548,7 +1548,7 @@
   "resolved" "https://registry.npmjs.org/@manaflair/redux-batch/-/redux-batch-1.0.0.tgz"
   "version" "1.0.0"
 
-"@material-ui/core@^4.0.0", "@material-ui/core@^4.11.4", "@material-ui/core@^4.12.1":
+"@material-ui/core@^4.0.0", "@material-ui/core@^4.11.4", "@material-ui/core@^4.12.0", "@material-ui/core@^4.12.1":
   "integrity" "sha512-C6hYsjkWCTfBx9FaqxhCZCITBagh7fyCKFtHyvO3tTOcBw6NJaktdhNZ2n82jQdQdgfFvg6OOxi7OOzsAdAcBQ=="
   "resolved" "https://registry.npmjs.org/@material-ui/core/-/core-4.12.1.tgz"
   "version" "4.12.1"
@@ -1566,7 +1566,7 @@
     "react-is" "^16.8.0 || ^17.0.0"
     "react-transition-group" "^4.4.0"
 
-"@material-ui/icons@^4.0.0", "@material-ui/icons@^4.11.2":
+"@material-ui/icons@^4.0.0", "@material-ui/icons@^4.11.0", "@material-ui/icons@^4.11.2":
   "integrity" "sha512-fQNsKX2TxBmqIGJCSi3tGTO/gZ+eJgWmMJkgDiOfyNaunNaxcklJQFaFogYcFl0qFuaEz1qaXYXboa/bUXVSOQ=="
   "resolved" "https://registry.npmjs.org/@material-ui/icons/-/icons-4.11.2.tgz"
   "version" "4.11.2"
@@ -8367,10 +8367,10 @@
   "resolved" "https://registry.npmjs.org/ms/-/ms-2.1.1.tgz"
   "version" "2.1.1"
 
-"mui-datatables@^3.7.7":
-  "integrity" "sha512-IHK6snQybKdyZET2G1ODN3cCrFE6u2TUk/wIGUMq7+vANXAALYjh7EXeJtesYmzR/7R7ctv4/V8uARraSQMKPg=="
-  "resolved" "https://registry.npmjs.org/mui-datatables/-/mui-datatables-3.7.7.tgz"
-  "version" "3.7.7"
+"mui-datatables@^3.8.2":
+  "integrity" "sha512-OjjwlmjZDpQvYhdelll8B+xNsr/uCS2x+quR72oISi0IrKIeioKgXn4YJrux54QkJn11f5FEFv8V1PGnjulktQ=="
+  "resolved" "https://registry.npmjs.org/mui-datatables/-/mui-datatables-3.8.2.tgz"
+  "version" "3.8.2"
   dependencies:
     "@babel/runtime-corejs3" "^7.12.1"
     "clsx" "^1.1.1"
