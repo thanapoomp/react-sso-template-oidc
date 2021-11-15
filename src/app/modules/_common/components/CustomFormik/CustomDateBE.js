@@ -14,41 +14,67 @@ function CustomDateBE(props) {
   const [months, setMonths] = React.useState([]);
   const [years, setYears] = React.useState([]);
 
+  var _isMounted = false;
+
   const initDays = () => {
-    let dayToSet = [];
-    dayToSet.push({ id: -1, name: "วัน" });
-    for (let index = 1; index <= 31; index++) {
-      dayToSet.push({ id: index, name: index.toString() });
+    if (_isMounted) {
+      let dayToSet = [];
+      // dayToSet.push({ id: -1, name: "วัน" });
+      for (let index = 1; index <= 31; index++) {
+        dayToSet.push({ id: index, name: index.toString() });
+      }
+      setDays(dayToSet);
     }
-    setDays(dayToSet);
   };
 
   const initMonths = () => {
-    let monthToSet = [];
-    monthToSet.push({ id: -1, name: "เดือน" });
-    monthToSet.push({ id: 1, name: "ม.ค." });
-    monthToSet.push({ id: 2, name: "ก.พ." });
-    monthToSet.push({ id: 3, name: "มี.ค." });
-    monthToSet.push({ id: 4, name: "เม.ย." });
-    monthToSet.push({ id: 5, name: "พ.ค." });
-    monthToSet.push({ id: 6, name: "มิ.ย." });
-    monthToSet.push({ id: 7, name: "ก.ค." });
-    monthToSet.push({ id: 8, name: "ส.ค." });
-    monthToSet.push({ id: 9, name: "ก.ย." });
-    monthToSet.push({ id: 10, name: "ต.ค." });
-    monthToSet.push({ id: 11, name: "พ.ย." });
-    monthToSet.push({ id: 12, name: "ธ.ค." });
-    setMonths(monthToSet);
+    if (_isMounted) {
+      if (!props.longestMonths) {
+        let monthToSet = [];
+        // monthToSet.push({ id: -1, name: "เดือน" });
+        monthToSet.push({ id: 1, name: "ม.ค." });
+        monthToSet.push({ id: 2, name: "ก.พ." });
+        monthToSet.push({ id: 3, name: "มี.ค." });
+        monthToSet.push({ id: 4, name: "เม.ย." });
+        monthToSet.push({ id: 5, name: "พ.ค." });
+        monthToSet.push({ id: 6, name: "มิ.ย." });
+        monthToSet.push({ id: 7, name: "ก.ค." });
+        monthToSet.push({ id: 8, name: "ส.ค." });
+        monthToSet.push({ id: 9, name: "ก.ย." });
+        monthToSet.push({ id: 10, name: "ต.ค." });
+        monthToSet.push({ id: 11, name: "พ.ย." });
+        monthToSet.push({ id: 12, name: "ธ.ค." });
+        setMonths(monthToSet);
+      } else {
+        let monthToSet = [];
+        // monthToSet.push({ id: -1, name: "เดือน" });
+        monthToSet.push({ id: 1, name: "มกราคม" });
+        monthToSet.push({ id: 2, name: "กุมภาพันธ์" });
+        monthToSet.push({ id: 3, name: "มีนาคม" });
+        monthToSet.push({ id: 4, name: "เมษายน" });
+        monthToSet.push({ id: 5, name: "พฤษภาคม" });
+        monthToSet.push({ id: 6, name: "มิถุนายน" });
+        monthToSet.push({ id: 7, name: "กรกฎาคม" });
+        monthToSet.push({ id: 8, name: "สิงหาคม" });
+        monthToSet.push({ id: 9, name: "กันยายน" });
+        monthToSet.push({ id: 10, name: "ตุลาคม" });
+        monthToSet.push({ id: 11, name: "พฤศจิกายน" });
+        monthToSet.push({ id: 12, name: "ธันวาคม" });
+        setMonths(monthToSet);
+      }
+    }
   };
 
   const initYears = () => {
-    let yearToSet = [{ id: -1, name: "พ.ศ." }];
-    let yearFrom = 1900;
-    let yearTo = dayjs().year();
-    for (let index = yearFrom; index <= yearTo; index++) {
-      yearToSet.push({ id: index, name: `${index + 543}` });
+    if (_isMounted) {
+      let yearToSet = [];
+      let yearFrom = 1900;
+      let yearTo = dayjs().year();
+      for (let index = yearFrom; index <= yearTo; index++) {
+        yearToSet.push({ id: index, name: `${index + 543}` });
+      }
+      setYears(yearToSet);
     }
-    setYears(yearToSet);
   };
 
   const handleSelectedDayChange = (event) => {
@@ -64,11 +90,17 @@ function CustomDateBE(props) {
   };
 
   const isValidDate = () => {
+    debugger
     let day = ("0" + selectedDay).slice(-2);
     let month = ("0" + selectedMonth).slice(-2);
     let year = selectedYear;
     let mixStringDate = `${year}-${month}-${day}`;
-    let result = dayjs(mixStringDate, "YYYY-MM-DD", true).isValid();
+    const myFormat = 'YYYY-MM-DD';
+
+    const dayjsDate = dayjs(mixStringDate, myFormat);
+    const dayjsToCheck = dayjs(dayjsDate).format(myFormat);
+    let result = (mixStringDate === dayjsToCheck)
+
     return result;
   };
 
@@ -82,13 +114,15 @@ function CustomDateBE(props) {
   };
 
   const getFormikInitialValues = () => {
-    // console.log(props.formik.values[`${props.name}`]);
-    if (props.formik.values[`${props.name}`]) {
-      let inputDate = dayjs(props.formik.values[`${props.name}`]);
+    if (_isMounted) {
+      // console.log(props.formik.values[`${props.name}`]);
+      if (props.formik.values[`${props.name}`]) {
+        let inputDate = dayjs(props.formik.values[`${props.name}`]);
 
-      setSelectedDay(inputDate.date());
-      setSelectedMonth(inputDate.month() + 1);
-      setSelectedYear(inputDate.year());
+        setSelectedDay(inputDate.date());
+        setSelectedMonth(inputDate.month() + 1);
+        setSelectedYear(inputDate.year());
+      }
     }
   };
 
@@ -111,10 +145,14 @@ function CustomDateBE(props) {
   }, [selectedDay, selectedMonth, selectedYear]);
 
   React.useEffect(() => {
+    _isMounted = true;
     initDays();
     initMonths();
     initYears();
     getFormikInitialValues();
+    return () => {
+      _isMounted = false;
+    };
   }, []);
 
   return (
@@ -126,7 +164,7 @@ function CustomDateBE(props) {
         container
         spacing={1}
         direction="row"
-        justifyContent="space-between"
+        justify="space-between"
         alignItems="center"
       >
         {/* start day */}
@@ -142,6 +180,9 @@ function CustomDateBE(props) {
               id: `${props.name}-day`,
             }}
           >
+            <option key={`${props.name}-day--1`} value={-1} disabled>
+              วัน
+            </option>
             {days.map((item) => (
               <option key={`${props.name}-day-${item.id}`} value={item.id}>
                 {item.name}
@@ -164,6 +205,9 @@ function CustomDateBE(props) {
               id: `${props.name}-month`,
             }}
           >
+            <option key={`${props.name}-month--1`} value={-1} disabled>
+              เดือน
+            </option>
             {months.map((item) => (
               <option key={`${props.name}-month-${item.id}`} value={item.id}>
                 {item.name}
@@ -186,6 +230,9 @@ function CustomDateBE(props) {
               id: `${props.name}-year`,
             }}
           >
+            <option key={`${props.name}-year--1`} value={-1} disabled>
+              พ.ศ.
+            </option>
             {years.map((item) => (
               <option key={`${props.name}-year-${item.id}`} value={item.id}>
                 {item.name}
@@ -211,6 +258,7 @@ CustomDateBE.propTypes = {
   label: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  longestMonths: PropTypes.bool,
 };
 
 // Same approach for defaultProps too
@@ -220,6 +268,7 @@ CustomDateBE.defaultProps = {
   label: "Do not forget to set label",
   disabled: false,
   required: false,
+  longestMonths: false,
 };
 
 export default CustomDateBE;
