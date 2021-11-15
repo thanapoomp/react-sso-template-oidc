@@ -1,13 +1,17 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
+import {useWindowSize} from 'react-use';
 
 function Home() {
+  const {width, height} = useWindowSize();
   return (
     <div>
       <Typography>
         Home sweet Home สวัสดี <Icon>home</Icon>${process.env.PUBLIC_URL}
       </Typography>
+      <div>width: {width}</div>
+      <div>height: {height}</div>
       <iframe
         title="dashBoard"
         width="1140"

@@ -1,9 +1,9 @@
 export const APP_INFO = {
   name: "client1",
-  version: "1.0.2",
+  version: "1.0.0",
   since: "2021",
   description: "Client1 Website",
-  contactUrl: "https://client1.thanapoom.cc",
+  contactUrl: "https://www.siamsmile.co.th",
 };
 
 export const VERSION_CHECKER = {

@@ -19,7 +19,7 @@ function SilentCallback() {
     userManager
       .signinSilentCallback()
       .then((user) => {
-        console.log(user);
+        // console.log(user);
       })
       .catch(function (e) {
         console.error(e);

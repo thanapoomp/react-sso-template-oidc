@@ -10,7 +10,11 @@ const initialAuthState = {
   roles: [],
   permissions: [],
   userManager: {},
-  client_version: ''
+  client_version: '',
+  selectedEmployee: {
+    id:'00205',
+    name:'Thanapoom'
+  }
 };
 
 export const reducer = (state = initialAuthState, action) => {

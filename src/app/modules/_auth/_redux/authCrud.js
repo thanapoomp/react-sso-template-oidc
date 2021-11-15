@@ -6,7 +6,7 @@ export function getUserByToken(token) {
 }
 
 export function getClientVersion(token) {
-  debugger
+  // debugger
   let decoded = jwt_decode(token)["client_version"];
   return decoded;
 }
